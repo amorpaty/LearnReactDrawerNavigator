@@ -1,52 +1,78 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View, Text, Button } from 'react-native';
-import { SafeAreaContext, SafeAreaView } from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
-const Drawer = createDrawerNavigator();
+const Tab = createBottomTabNavigator();
 
-function HomeScreen({ navigation }) {
-  return (
-    <View>
-      <Text>Home</Text>
-      <Button title='Drawer 열기' onPress={() => navigation.openDrawer()} />
-      <Button
-        title='Setting 열기'
-        onPress={() => navigation.navigate('Setting')}
-      />
-    </View>
-  );
+function HomeScreen() {
+  return <Text>Home</Text>
 }
 
-function SettingScreen({ navigation }) {
-  return (
-    <View>
-      <Text>Setting</Text>
-      <Button title='뒤로가기' onPress={() => navigation.goBack()}></Button>
-    </View>
-  );
+function SearchScreen() {
+  return <Text>Search</Text>
+}
+
+function NotificationScreen() {
+  return <Text>Notification</Text>
+}
+
+function MessageScreen() {
+  return <Text>Message</Text>
 }
 
 function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator
+      <Tab.Navigator
         initialRouteName='Home'
-        drawerPosition="left"
-        backBehavior='history'
-        drawerContent={({ navigation }) => (
-          <SafeAreaView>
-            <Text>A Custom Drawer</Text>
-            <Button
-              onPress={() => navigation.closeDrawer()}
-              title='Drawer 닫기'
-            />
-          </SafeAreaView>
-        )}>
-        <Drawer.Screen name='Home' component={HomeScreen} options={{ title: '홈', headerLeft: () => <Text>Left</Text>, headerRight: () => <Text>Right</Text> }}></Drawer.Screen>
-        <Drawer.Screen name='Setting' component={SettingScreen} options={{ title: '설정' }}></Drawer.Screen>
-      </Drawer.Navigator>
+        tabBarOptions={{
+          activeTintColor: '#fb8c00',
+          showLabel: false
+        }}
+      >
+        <Tab.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            title: '홈',
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="home" color={color} size={size} />
+            )
+          }}
+        ></Tab.Screen>
+        <Tab.Screen
+          name="Search"
+          component={SearchScreen}
+          options={{
+            title: '검색',
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="search" color={color} size={size} />
+            )
+          }}
+        ></Tab.Screen>
+        <Tab.Screen
+          name="Notification"
+          component={NotificationScreen}
+          options={{
+            title: '알림',
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="notifications" color={color} size={size} />
+            )
+          }}
+        ></Tab.Screen>
+        <Tab.Screen
+          name="Message"
+          component={MessageScreen}
+          options={{
+            title: '메시지',
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="message" color={color} size={size} />
+            )
+          }}
+        ></Tab.Screen>
+      </Tab.Navigator>
     </NavigationContainer >
   )
 }
